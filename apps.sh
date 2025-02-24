@@ -7,6 +7,7 @@ sudo pacman -Syu --noconfirm
 # 2. Instalar pacotes normais via pacman
 echo "Instalando pacotes normais..."
 sudo pacman -S --noconfirm \
+    network-manager-applet\
     ttf-jetbrains-mono-nerd \
     noto-fonts-emoji \
     ttf-dejavu \
@@ -93,7 +94,25 @@ sudo pacman -S --noconfirm \
     lib32-nvidia-utils \
     lib32-vulkan-icd-loader \
     flatpak \
-    intel-ucode
+    intel-ucode \
+    net-tools \
+    iproute2 \
+    ufw \
+    fail2ban \
+    rsync \
+    borgbackup \
+    htop \
+    nmon \
+    iotop \
+    sysstat \
+    git \
+    python python-pip \
+    nodejs npm \
+    go rust \
+    cups \
+    system-config-printer \
+    tlp \
+    powertop
 
 # 3. Instalar suporte a Flatpak
 echo "Instalando o suporte a Flatpak..."
