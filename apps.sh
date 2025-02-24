@@ -111,4 +111,28 @@ flatpak install flathub org.torproject.torbrowser-launcher \
 echo "Limpando pacotes desnecessários..."
 sudo pacman -Rns $(pacman -Qdtq) --noconfirm
 
+# 6. Configurar GRUB e NVIDIA
+echo "Configurando o GRUB e NVIDIA..."
+
+# Adicionar os módulos no GRUB
+echo "Adicionando módulos no GRUB..."
+echo 'MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)' | sudo tee -a /etc/default/grub > /dev/null
+
+# Adicionar configuração para a NVIDIA no modprobe
+echo "Adicionando configuração para a NVIDIA no modprobe..."
+echo "options nvidia_drm modeset=1 fbdev=1" | sudo tee -a /etc/modprobe.d/nvidia.conf > /dev/null
+
+# Gerar o initramfs e atualizar o GRUB
+echo "Gerando initramfs e atualizando o GRUB..."
+sudo mkinitcpio -P &>/dev/null
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+# 7. Limpar pacotes desnecessários
+echo "Limpando pacotes desnecessários..."
+sudo pacman -Rns $(pacman -Qdtq) --noconfirm
+
+
+
+
+
 echo "Instalação concluída!"
