@@ -7,8 +7,16 @@ sudo pacman -Syu --noconfirm
 # 2. Instalar pacotes normais via pacman
 echo "Instalando pacotes normais..."
 sudo pacman -S --noconfirm \
+    ttf-jetbrains-mono-nerd \
+    noto-fonts-emoji \
+    ttf-dejavu \
+    ttf-droid \
+    noto-fonts \
+    noto-fonts-cjk \
+    ttf-font-awesome \
+    nwg-look\
     unzip \
-    gum \
+    gum \ 
     rofi \
     wofi \
     unrar \
