@@ -1,23 +1,130 @@
 #!/bin/bash
 
+# 0. modifica pacman.conf
+
+
+# 7. Habilitar múltiplos downloads, cores e iLoveCandy no pacman.conf
+echo "Habilitando múltiplos downloads, cores e iLoveCandy no pacman.conf..."
+
+# Habilitar múltiplos downloads no pacman.conf
+sudo sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 15/' /etc/pacman.conf
+
+# Habilitar cores no pacman.conf
+sudo sed -i 's/#Color/Color/' /etc/pacman.conf
+
+# Habilitar iLoveCandy no pacman.conf
+sudo sed -i 's/#ILoveCandy/ILoveCandy/' /etc/pacman.conf
+
+
 # 1. Atualizar o sistema
 echo "Atualizando o sistema..."
+
 sudo pacman -Syu --noconfirm
 
 # 2. Instalar pacotes normais via pacman
 echo "Instalando pacotes normais..."
 sudo pacman -S --noconfirm \
-    network-manager-applet\
-    ttf-jetbrains-mono-nerd \
-    noto-fonts-emoji \
-    ttf-dejavu \
-    ttf-droid \
-    noto-fonts \
-    noto-fonts-cjk \
+        unzip \
+    gum \
+    rofi \
+    wofi \
+    unrar \
+    okular \
+    waybar \
+    swww \
+    dolphin \
+    dolphin-plugins \
+    ark \
+    firefox \
+    loupe \
+    xdg-desktop-portal \
+    xdg-desktop-portal-gnome \
+    xdg-desktop-portal-gtk \
+    xdg-desktop-portal-hyprland \
+    blueman \
+    bluedevil \
+    xdg-desktop-portal-wlr \
+    xdg-user-dirs \
+    xdg-user-dirs-gtk \
+    xdg-utils \
+    archlinux-xdg-menu \
+    btop \
     ttf-font-awesome \
-    nwg-look\
+    noto-fonts \
+    noto-fonts-emoji \
+    noto-fonts-extra \
+    ttf-firacode-nerd \
+    ttf-jetbrains-mono-nerd \
+    swayidle \
+    polkit-gnome \
+    bash-completion \
+    ntfs-3g \
+    ffmpegthumbnailer \
+    ffmpegthumbs \
+    volumeicon \
+    pavucontrol \
+    pamixer \
+    notification-daemon \
+    wl-clipboard \
+    wayland-utils \
+    clinfo \
+    alsa-utils \
+    imagemagick \
+    adw-gtk-theme \
+    breeze \
+    breeze5 \
+    breeze-gtk \
+    breeze-icons \
+    nwg-look \
+    bluez \
+    bluez-utils \
+    bluez-tools \
+    kio \
+    kde-cli-tools \
+    sddm \
+    xorg \
+    network-manager-applet \
+    exfat-utils \
+    btrfs-progs \
+    xfsprogs \
+    jfsutils \
+    f2fs-tools \
+    lvm2 \
+    zip \
+    timeshift \
+    lutris \
+    reiserfsprogs \
+    nilfs-utils \
+    udftools \
+    e2fsprogs \
+    kitty \
+    gedit \
+    gparted \
+    mangohud \
+    telegram-desktop \
+    discord \
+    wine \
+    filelight \
+    pacman-contrib \
+    wine-gecko \
+    wine-mono \
+    winetricks \
+    curl \
+    deluge-gtk \
+    xorg-xdpyinfo \
+    mesa-utils \
+    glfw \
+    gnome-disk-utility \
+    gnome-calendar \
+    gnome-calculator \
+    ksnip \
+    swaync \
+    hyprland \
+    xorg-server \
+    xorg-xinit \
+    epapirus-icon-theme\
     unzip \
-    gum \ 
+    gum \
     rofi \
     wofi \
     unrar \
@@ -94,7 +201,7 @@ sudo pacman -S --noconfirm \
     lib32-nvidia-utils \
     lib32-vulkan-icd-loader \
     flatpak \
-    intel-ucode \
+    intel-ucode\
     net-tools \
     iproute2 \
     ufw \
@@ -133,10 +240,37 @@ flatpak install flathub org.torproject.torbrowser-launcher \
     com.brave.Browser \
     org.onlyoffice.desktopeditors \
     it.mijorus.gearlever
+# Clonar e instalar yay-bin do AUR
+git clone https://aur.archlinux.org/yay-bin.git
+cd yay-bin
+makepkg -si --noconfirm
+cd ..
+
+# Instala pacotes do AUR
+yay -S --noconfirm swayosd-git waypaper hyprswitch qt5ct-kde qt6ct-kde grimblast swaylock-effects wlogout protonup-qt-bin clipman clipse
+
+# Adiciona o usuário aos grupos necessários
+sudo usermod -aG wheel $USER
+sudo usermod -aG lp $USER
+
+# Atualiza diretórios do xdg
+xdg-user-dirs-update
+
+# Configura o Dolphin como gerenciador de arquivos
+xdg-mime default org.kde.dolphin.desktop inode/directory
+
+# Habilita serviços
+systemctl enable sddm.service
+systemctl start user@970.service
+sudo systemctl start bluetooth.service
+sudo systemctl enable bluetooth.service
 
 # 6. Limpar pacotes desnecessários
 echo "Limpando pacotes desnecessários..."
 sudo pacman -Rns $(pacman -Qdtq) --noconfirm
+
+
+
 
 # 6. Configurar GRUB e NVIDIA
 echo "Configurando o GRUB e NVIDIA..."
@@ -157,9 +291,5 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 # 7. Limpar pacotes desnecessários
 echo "Limpando pacotes desnecessários..."
 sudo pacman -Rns $(pacman -Qdtq) --noconfirm
-
-
-
-
 
 echo "Instalação concluída!"
